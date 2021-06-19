@@ -1,6 +1,6 @@
 //swag
 import "./App.css";
-import { Button } from "@material-ui/core";
+import { Button, colors } from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
 //hooks
 import { useState } from "react";
@@ -8,7 +8,9 @@ import { useQuery } from "react-query";
 
 //fetch
 const getEm = async () =>
-  await (await fetch("https://www.colr.org/json/color/random/")).json();
+  await (await fetch(`https://www.colr.org/json/color/random`))
+    .json()
+    .then((rez) => JSON.stringify(rez));
 
 function App() {
   const [color, colorSet] = useState([]);
@@ -17,13 +19,14 @@ function App() {
   const { data, isLoading, error } = useQuery("colors", getEm);
   console.log(data);
   if (isLoading) return <LinearProgress />;
-  if (error) return <div> Greska </div>;
+  if (error) return <div> zilch </div>;
 
   //display
   return (
     <div className="App">
       <header className="App-header">fetched, queried</header>
       <Button
+      // value = {data.colors.hex}
       //onClick={colorSet=() => void}
       >
         click
