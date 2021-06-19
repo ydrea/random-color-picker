@@ -1,42 +1,33 @@
+//swag
 import "./App.css";
-import { useState, useEffect } from "react";
-import {useQuery} from 'react-query';
+import { Button } from "@material-ui/core";
+import LinearProgress from "@material-ui/core/LinearProgress";
+//hooks
+import { useState } from "react";
+import { useQuery } from "react-query";
 
-const getProducts = async () => 
-await (await fetch (
-    "https://www.colr.org/json/color/random/"
-)).json();
+//fetch
+const getEm = async () =>
+  await (await fetch("https://www.colr.org/json/color/random/")).json();
 
 function App() {
-  const [loading, setLoading] = useState(false);
   const [color, colorSet] = useState([]);
 
-
-  const {data, isLoading, error} = useQuery ('stvari', getProducts); 
+  //query
+  const { data, isLoading, error } = useQuery("colors", getEm);
   console.log(data);
+  if (isLoading) return <LinearProgress />;
+  if (error) return <div> Greska </div>;
 
-
-  // useEffect(() => {
-  //   const fetchEvents = async () => {
-  //     setLoading(true);
-  //     const response = await fetch(
-  //       "https://www.colr.org/json/color/random/"
-  //     ).then(function (response) {
-  //       if (!response.ok) {
-  //         return Promise.reject("zilch");
-  //       }
-  //       return response.json();
-  //     });
-  //     colorSet(response);
-  //     console.log(color);
-  //     setLoading(false);
-  //   };
-  //   fetchEvents();
-  // }, []);
-
+  //display
   return (
     <div className="App">
-      <header className="App-header">fetched</header>
+      <header className="App-header">fetched, queried</header>
+      <Button
+      //onClick={colorSet=() => void}
+      >
+        click
+      </Button>
     </div>
   );
 }
