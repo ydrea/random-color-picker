@@ -16,18 +16,20 @@ function App() {
   const [color, colorSet] = useState([]);
 
   //query
-  const { data, isLoading, error } = useQuery("colors", getEm);
+  const { data, isLoading, error, refetch } = useQuery("colors", getEm, {manual: true, });
   console.log(data);
   if (isLoading) return <LinearProgress />;
   if (error) return <div> zilch </div>;
+
+  //manual query
+const reFetch = () => { refetch() }
 
   //display
   return (
     <div className="App">
       <header className="App-header">fetched, queried</header>
       <Button
-      // value = {data.colors.hex}
-      //onClick={colorSet=() => void}
+    onClick={()=>reFetch()}
       >
         click
       </Button>
