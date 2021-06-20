@@ -1,6 +1,6 @@
 //swag
 import "./App.css";
-import { Button, colors } from "@material-ui/core";
+import { Button } from "@material-ui/core";
 import LinearProgress from "@material-ui/core/LinearProgress";
 //hooks
 import { useState } from "react";
@@ -9,18 +9,14 @@ import _ from "lodash";
 
 //fetch
 const getEm = async () =>
-  await (
-    await fetch(`https://www.colr.org/json/color/random`)
-  )
+  await (await fetch(`https://www.colr.org/json/color/random`))
     .json()
-    // console.log(res);
     .then((rez) => _.toArray(rez));
 
 function App() {
-  const [color, colorSet] = useState([]);
-
+  const [text, textSet] = useState("");
   //query
-  const { data, isLoading, error, refetch } = useQuery("colors", getEm, {
+  const { data, isLoading, error, refetch } = useQuery(["color", 6], getEm, {
     manual: true,
   });
   console.log(data);
@@ -36,19 +32,19 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">fetched, queried</header>
-      <Button onClick={() => reFetch()}>click</Button>
-      {
-        <ul>
-          <li> {data[6]} </li>
-        </ul>
-      }
-      {color[6]}
+      <Button onClick={() => reFetch()}>{data[6]}</Button>
+      
       <input
         type="text"
         value={text}
         onChange={(event) => textSet(event.target.value)}
       />
       <button>Click me</button>
+      { 
+        <ul>
+          <li> {data[6]} </li>
+        </ul>
+      }
     </div>
   );
 }
