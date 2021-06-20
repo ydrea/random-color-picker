@@ -5,34 +5,43 @@ import LinearProgress from "@material-ui/core/LinearProgress";
 //hooks
 import { useState } from "react";
 import { useQuery } from "react-query";
+import _ from "lodash";
 
 //fetch
 const getEm = async () =>
-  await (await fetch(`https://www.colr.org/json/color/random`))
+  await (
+    await fetch(`https://www.colr.org/json/color/random`)
+  )
     .json()
-    .then((rez) => JSON.stringify(rez));
+    // console.log(res);
+    .then((rez) => _.toArray(rez));
 
 function App() {
   const [color, colorSet] = useState([]);
 
   //query
-  const { data, isLoading, error, refetch } = useQuery("colors", getEm, {manual: true, });
+  const { data, isLoading, error, refetch } = useQuery("colors", getEm, {
+    manual: true,
+  });
   console.log(data);
   if (isLoading) return <LinearProgress />;
   if (error) return <div> zilch </div>;
 
   //manual query
-const reFetch = () => { refetch() }
+  const reFetch = () => {
+    refetch();
+  };
 
   //display
   return (
     <div className="App">
       <header className="App-header">fetched, queried</header>
-      <Button
-    onClick={()=>reFetch()}
-      >
-        click
-      </Button>
+      <Button onClick={() => reFetch()}>click</Button>
+      {
+        <ul>
+          <li> {data[6]} </li>
+        </ul>
+      }
     </div>
   );
 }
