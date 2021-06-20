@@ -1,38 +1,47 @@
 //swag
 import "./App.css";
-import { Button, colors } from "@material-ui/core";
-import LinearProgress from "@material-ui/core/LinearProgress";
+import { Button } from "@material-ui/core";
+
 //hooks
-import { useState } from "react";
-import { useQuery } from "react-query";
+import { useState, useEffect } from "react";
+import _ from "lodash";
+//components
+import List from "./List";
 
-//fetch
-const getEm = async () =>
-  await (await fetch(`https://www.colr.org/json/color/random`))
-    .json()
-    .then((rez) => JSON.stringify(rez));
-
+//main
 function App() {
   const [color, colorSet] = useState([]);
+  const [text, textSet] = useState([]);
 
-  //query
-  const { data, isLoading, error, refetch } = useQuery("colors", getEm, {manual: true, });
-  console.log(data);
-  if (isLoading) return <LinearProgress />;
-  if (error) return <div> zilch </div>;
-
-  //manual query
-const reFetch = () => { refetch() }
+  useEffect(
+    function fetchIt() {
+      async function getEm() {
+        const rez = await fetch(`https://www.colr.org/json/color/random`);
+        const json = await rez.json();
+        // colorSet(json);
+        console.log(json);
+        //de-objectify
+        _.toArray(json);
+        colorSet(json);
+        console.log(color);
+      }
+      getEm();
+    },
+    []
+  );
 
   //display
   return (
     <div className="App">
-      <header className="App-header">fetched, queried</header>
-      <Button
-    onClick={()=>reFetch()}
-      >
-        click
-      </Button>
+      <header className="App-header">fetched</header>
+      <Button onClick={() => colorSet()}>{color.new_color}</Button>
+      <List color={color} />
+      <input
+        type="text"
+        value={text}
+        onChange={(event) => textSet(event.target.value)}
+      />
+      <button>Click me</button>
     </div>
   );
 }
