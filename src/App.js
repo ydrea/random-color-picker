@@ -11,12 +11,16 @@ import axios from "axios";
 
 //main
 function App() {
-  const [color, colorSet] = useState([]);
+  const [color, colorSet] = useState('');
   const [text, textSet] = useState([]);
+const url = `https://www.colr.org/json/color/random`
 
-  useEffect(() => {
-    axios
-      .get(`https://www.colr.org/json/color/random`)
+useEffect(() => {
+  }, [color]);
+  
+const getEm = () =>
+{ axios
+      .get(url)
       .then((rez) => {
         console.log(rez);
         colorSet(rez.data);
@@ -24,14 +28,15 @@ function App() {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
-console.log(color)
+  }
+console.log(color);
+
   //display
   return (
     <div className="App">
       <header className="App-header">fetched</header>
       <Button
-      //onClick={() => colorSet(color[6])}
+      onClick={() => getEm()}
       >
         color
       </Button>
