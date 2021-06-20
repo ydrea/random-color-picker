@@ -42,6 +42,13 @@ function App() {
           <li> {data[6]} </li>
         </ul>
       }
+      {color[6]}
+      <input
+        type="text"
+        value={text}
+        onChange={(event) => textSet(event.target.value)}
+      />
+      <button>Click me</button>
     </div>
   );
 }
