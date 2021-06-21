@@ -3,17 +3,23 @@ import "./App.css";
 import { Button } from "@material-ui/core";
 
 //hooks
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import _ from "lodash";
-import {api} from "./api";
+import { api } from "./api";
 
 //components
+import { List } from "./List";
 
 //main
 function App() {
+  const [colorList, colorListSet] = useState([]);
+  const [text, textSet] = useState("");
   const [color, colorSet] = useState("");
   const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
 
+  useEffect(() => {
+    addToList();
+  }, [color]);
 
   const getEm = () => {
     api
@@ -28,6 +34,13 @@ function App() {
   };
   console.log(color);
 
+  //add to list
+  const addToList = (text) => {
+    let copy = [...colorList];
+    copy = [...copy, { id: colorList.length + 1, text, complete: false }];
+    colorListSet(copy);
+  };
+
   //display
   return (
     <div className="App">
@@ -35,96 +48,16 @@ function App() {
       <Button style={{ background: `#` + `${color}` }} onClick={() => getEm()}>
         color
       </Button>
-      <List color={color} />
+      <List
+        color={color}
+        text={text}
+        textSet={textSet}
+        addToList={addToList}
+        colorList={colorList}
+        colorListSet={colorListSet}
+      />
     </div>
   );
 }
 
 export default App;
-
-export const List = ({ color }) => {
-  const [text, textSet] = useState("");
-  const [colorList, colorListSet] = useState([]);
-
-  const isHex = () => {
-    let re = /[0-9A-Fa-f]{6}/g;
-    let inputString = "AABBCC";
-
-    if (!re.test(inputString)) {
-      alert("invalid hex");
-    } else {
-      return true;
-    }
-    re.lastIndex = 0;
-  };
-
-  const isIncluded = () => {
-    if (!_.includes([colorList], text)) return true;
-  };
-
-  const ifSubmit = () => {
-    if (isHex && isIncluded) return true;
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    addToList(text);
-    textSet("");
-  };
-
-  const addToList = (text) => {
-    let copy = [...colorList];
-    copy = [...copy, { id: colorList.length + 1, text, complete: false }];
-    colorListSet(copy);
-  };
-
-  const handleChange = (e) => {
-    textSet(e.currentTarget.value);
-  };
-
-  const handleToggle = (id) => {
-    let mapped = colorList.map((text) => {
-      return text.id === Number(id)
-        ? { ...text, complete: !text.complete }
-        : { ...text };
-    });
-    colorListSet(mapped);
-  };
-  return (
-    <div>
-      <p>{[...text, color.new_color]}</p>
-
-      {colorList.map((item) => {
-        return <ListItem item={item} handleToggle={handleToggle} />;
-      })}
-
-      <form onSubmit={handleSubmit}>
-        <input
-          value={text}
-          type="text"
-          onChange={handleChange}
-          placeholder="Enter task..."
-        />
-        <button disabled={!ifSubmit}>Submit</button>
-      </form>
-    </div>
-  );
-};
-
-export const ListItem = ({ item, handleToggle }) => {
-  const handleClick = (e) => {
-    e.preventDefault();
-    handleToggle(e.currentTarget.id);
-  };
-  return (
-    <div
-      id={item.id}
-      key={item.id + item.text}
-      name="todo"
-      value={item.id}
-      onClick={handleClick}
-    >
-      {item.text}
-    </div>
-  );
-};
