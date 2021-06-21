@@ -66,15 +66,54 @@ export const List = ({ color }) => {
   const ifSubmit = () => {
     if (isHex && isIncluded) return true;
   };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addToList(text);
+    textSet('');
+    
+  }
+
+  const addToList = (text) => {
+    let copy = [...colorList];
+    copy = [...copy, { id: colorList.length + 1, text, complete: false }];
+    colorListSet(copy);
+  }
+
+  const handleChange = (e) => {
+    textSet(e.currentTarget.value)
+}
   return (
     <div>
       <p>{[...text, color.new_color]}</p>
-      <input
-        type="text"
-        value={text}
-        onChange={(event) => textSet(event.target.value)}
-      />
-      <button disabled={!ifSubmit}>Color me</button>
+
+      {colorList.map(item => {
+                return (
+                    <ListItem item={item} />
+                )
+            })}
+      
+      <form onSubmit={handleSubmit}>
+            <input value={text} type="text" onChange={handleChange} placeholder="Enter task..."/>
+            <button 
+            disabled={!ifSubmit}
+            >Submit</button>
+        </form>
     </div>
   );
 };
+
+
+export const ListItem = ({item, handleToggle}) => {
+
+  const handleClick = (e) => {
+    e.preventDefault()
+    handleToggle(e.currentTarget.id)
+}
+  return (
+    <div id={item.id} key={item.id + item.text} name="todo" value={item.id} onClick={handleClick}>
+    {item.text}
+      
+    </div>
+  )
+}
