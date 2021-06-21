@@ -58,7 +58,7 @@ function App() {
     <div className="App">
       <header className="App-header">axios api</header>
       <Button
-        style={{ background: `#` + `${color}` }}
+        style={{ background: `#` + `${col}` }}
         onClick={() => handleClick()}
       >
         {" "}
@@ -72,11 +72,11 @@ function App() {
             {...provided.droppableProps}
             ref={provided.innerRef}
           >
-            {colorList.map((i) => (
-              <Draggable>
+            {colorList.map((i, index) => (
+              <Draggable key={i.id} draggableId={id} index={index}>
                 {(provided
                    =>
-                <p key={i.id}> {i.col} </p>
+                <p ref={provided.innerRef} {...provided.draggableProps} {...provided.dragHandleProps}> {i.col} </p>
                 )}
               </Draggable>
             ))}
@@ -89,6 +89,8 @@ function App() {
               colorList={colorList}
               colorListSet={colorListSet}
             />
+
+      {provided.placeholder}
           </div>
           )}
         </Droppable>

@@ -1,7 +1,13 @@
 import _ from "lodash";
 import { ListItem } from "./ListItem";
 
-export const List = ({ text, textSet, addTextToList, colorList, colorListSet }) => {
+export const List = ({
+  text,
+  textSet,
+  addTextToList,
+  colorList,
+  colorListSet,
+}) => {
   //verify input
   const isHex = () => {
     let re = /[0-9A-Fa-f]{6}/g;
@@ -55,7 +61,7 @@ export const List = ({ text, textSet, addTextToList, colorList, colorListSet }) 
           value={text}
           type="text"
           onChange={handleChange}
-          placeholder="Enter task..."
+          placeholder="Daj hex..."
         />
         <button disabled={!ifSubmit}>Submit</button>
       </form>
