@@ -83,13 +83,21 @@ export const List = ({ color }) => {
   const handleChange = (e) => {
     textSet(e.currentTarget.value)
 }
+
+
+const handleToggle = (id) => {
+  let mapped = colorList.map(text => {
+    return text.id === Number(id) ? { ...text, complete: !text.complete } : { ...text};
+  });
+  colorListSet(mapped);
+}
   return (
     <div>
       <p>{[...text, color.new_color]}</p>
 
       {colorList.map(item => {
                 return (
-                    <ListItem item={item} />
+                    <ListItem item={item} handleToggle={handleToggle} />
                 )
             })}
       
