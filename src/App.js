@@ -3,9 +3,9 @@ import "./App.css";
 import { Button } from "@material-ui/core";
 
 //hooks
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import _ from "lodash";
-import axios from "axios";
+import {api} from "./api";
 
 //components
 
@@ -14,10 +14,10 @@ function App() {
   const [color, colorSet] = useState("");
   const url = "https://www.colr.org/json/color/random";
 
-  useEffect(() => {}, [color]);
+  // useEffect(() => {}, [color]);
 
   const getEm = () => {
-    axios
+    api
       .get(url)
       .then((rez) => {
         console.log(rez);
@@ -32,7 +32,7 @@ function App() {
   //display
   return (
     <div className="App">
-      <header className="App-header">axiozed</header>
+      <header className="App-header">axios api</header>
       <Button style={{ background: `#` + `${color}` }} onClick={() => getEm()}>
         color
       </Button>
@@ -70,58 +70,62 @@ export const List = ({ color }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addToList(text);
-    textSet('');
-    
-  }
+    textSet("");
+  };
 
   const addToList = (text) => {
     let copy = [...colorList];
     copy = [...copy, { id: colorList.length + 1, text, complete: false }];
     colorListSet(copy);
-  }
+  };
 
   const handleChange = (e) => {
-    textSet(e.currentTarget.value)
-}
+    textSet(e.currentTarget.value);
+  };
 
-
-const handleToggle = (id) => {
-  let mapped = colorList.map(text => {
-    return text.id === Number(id) ? { ...text, complete: !text.complete } : { ...text};
-  });
-  colorListSet(mapped);
-}
+  const handleToggle = (id) => {
+    let mapped = colorList.map((text) => {
+      return text.id === Number(id)
+        ? { ...text, complete: !text.complete }
+        : { ...text };
+    });
+    colorListSet(mapped);
+  };
   return (
     <div>
       <p>{[...text, color.new_color]}</p>
 
-      {colorList.map(item => {
-                return (
-                    <ListItem item={item} handleToggle={handleToggle} />
-                )
-            })}
-      
+      {colorList.map((item) => {
+        return <ListItem item={item} handleToggle={handleToggle} />;
+      })}
+
       <form onSubmit={handleSubmit}>
-            <input value={text} type="text" onChange={handleChange} placeholder="Enter task..."/>
-            <button 
-            disabled={!ifSubmit}
-            >Submit</button>
-        </form>
+        <input
+          value={text}
+          type="text"
+          onChange={handleChange}
+          placeholder="Enter task..."
+        />
+        <button disabled={!ifSubmit}>Submit</button>
+      </form>
     </div>
   );
 };
 
-
-export const ListItem = ({item, handleToggle}) => {
-
+export const ListItem = ({ item, handleToggle }) => {
   const handleClick = (e) => {
-    e.preventDefault()
-    handleToggle(e.currentTarget.id)
-}
+    e.preventDefault();
+    handleToggle(e.currentTarget.id);
+  };
   return (
-    <div id={item.id} key={item.id + item.text} name="todo" value={item.id} onClick={handleClick}>
-    {item.text}
-      
+    <div
+      id={item.id}
+      key={item.id + item.text}
+      name="todo"
+      value={item.id}
+      onClick={handleClick}
+    >
+      {item.text}
     </div>
-  )
-}
+  );
+};
