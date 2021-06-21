@@ -12,4 +12,170 @@
         {"f8ceba": 
             [
                 {"d_count": 0, "id": "5758", "a_count": 1, "name": "southwestern"}, 
-                {"d_count": 0, "id": "2781", "a_count": 1, "name": "sky"}]}, "messages": [], "new_color": "f8ceba"}
+                {"d_count": 0, "id": "2781", "a_count": 1, "name": "sky"}]}, "messages": [], 
+        "new_color": "f8ceba"}
+
+//swag
+import "./App.css";
+import { Button } from "@material-ui/core";
+
+//hooks
+import { useState, useEffect } from "react";
+import _ from "lodash";
+import axios from "axios";
+
+//components
+import { List } from "./List";
+
+//main
+function App() {
+  const [colorList, colorListSet] = useState([]);
+  const [text, textSet] = useState("");
+  // const [colorText, colorTextSet] = useState("");
+  const [color, colorSet] = useState("");
+  const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
+
+
+  const getEm = () => {
+    axios
+      .get(url)
+      .then((rez) => {
+        console.log(rez);
+        colorSet(rez.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+  console.log(color);
+
+  //add text to list
+  const addToList = (text) => {
+    let copy = [...colorList];
+    copy = [...copy, { id: colorList.length + 1, text, complete: false }];
+    colorListSet(copy);
+  };
+
+
+  useEffect(() => {
+  }, [color]);
+  //display
+  return (
+    <div className="App">
+      <header className="App-header">axios api</header>
+      <Button style={{ background: `#` + `${color}` }} onClick={() => getEm()}>
+        color
+      </Button>
+      {color.map(i => (
+        <p key= {i.color.new_color} > {i.color.new_color} </p>
+      )
+        ) }
+      <List
+        color={color}
+        colorSet={colorSet}
+        text={text}
+        textSet={textSet}
+        addToList={addToList}
+        colorList={colorList}
+        colorListSet={colorListSet}
+      />
+    </div>
+  );
+}
+
+export default App;
+
+//////////////////////
+
+import _ from "lodash";
+import { ListItem } from "./ListItem";
+
+export const List = ({
+  color,
+  text,
+  textSet,
+  addToList,
+  colorList,
+  colorListSet,
+}) => {
+  //verify input
+  const isHex = () => {
+    let re = /[0-9A-Fa-f]{6}/g;
+    let inputString = "AABBCC";
+
+    if (!re.test(inputString)) {
+      alert("invalid hex");
+    } else {
+      return true;
+    }
+    re.lastIndex = 0;
+  };
+
+  const isIncluded = () => {
+    if (!_.includes([colorList], text)) return true;
+  };
+
+  const ifSubmit = () => {
+    if (isHex && isIncluded) return true;
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    addToList(text);
+    textSet("");
+  };
+
+  const handleChange = (e) => {
+    textSet(e.currentTarget.value);
+  };
+
+  const handleToggle = (id) => {
+    let mapped = colorList.map((text) => {
+      return text.id === Number(id)
+        ? { ...text, complete: !text.complete }
+        : { ...text };
+    });
+    colorListSet(mapped);
+  };
+
+  return (
+    <div>
+      <p>{text}</p>
+
+      {colorList.map((item) => {
+        return <ListItem item={item} handleToggle={handleToggle} />;
+      })}
+
+      <form onSubmit={handleSubmit}>
+        <input
+          value={text}
+          type="text"
+          onChange={handleChange}
+          placeholder="Enter task..."
+        />
+        <button disabled={!ifSubmit}>Submit</button>
+      </form>
+    </div>
+  );
+};
+
+//////////////
+
+
+export const ListItem = ({ item, handleToggle }) => {
+    const handleClick = (e) => {
+      e.preventDefault();
+      handleToggle(e.currentTarget.id);
+    };
+    return (
+      <div
+        id={item.id}
+        key={item.id + item.text}
+        name="bold"
+        value={item.id}
+        onClick={handleClick}
+      >
+        {item.text}
+      </div>
+    );
+  };

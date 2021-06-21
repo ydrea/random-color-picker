@@ -15,8 +15,9 @@ function App() {
   const [colorList, colorListSet] = useState([]);
   const [text, textSet] = useState("");
   // const [colorText, colorTextSet] = useState("");
-  const [color, colorSet] = useState(null);
+  const [color, colorSet] = useState("");
   const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
+
 
   const getEm = () => {
     axios
@@ -38,7 +39,9 @@ function App() {
     colorListSet(copy);
   };
 
-  useEffect(() => {}, [color]);
+
+  useEffect(() => {
+  }, [color]);
   //display
   return (
     <div className="App">
@@ -46,7 +49,10 @@ function App() {
       <Button style={{ background: `#` + `${color}` }} onClick={() => getEm()}>
         color
       </Button>
-
+      {color.map(i => (
+        <p key= {i.color.new_color} > {i.color.new_color} </p>
+      )
+        ) }
       <List
         color={color}
         colorSet={colorSet}
