@@ -1,11 +1,12 @@
 //swag
 import "./App.css";
 import { Button } from "@material-ui/core";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 //hooks
 import { useState, useEffect } from "react";
 import _ from "lodash";
 import axios from "axios";
+
 //components
 import { List } from "./List";
 
@@ -39,60 +40,41 @@ function App() {
 
   //add color to list
   const addColorToList = (color) => {
-    let col = color.new_color;
-    console.log(col);
-    let copy = [...colorList];
+   let col = (color.new_color);
+   console.log(col);
+          let copy = [...colorList];
     copy = [...copy, { id: colorList.length + 1, col, complete: false }];
     colorListSet(copy);
     console.log(colorList);
+
   };
   console.log(colorList);
 
   const handleClick = (e) => {
     getEm();
     addColorToList(color);
+  //   textSet("");
   };
 
   //display
   return (
     <div className="App">
       <header className="App-header">axios api</header>
-      <Button
-        style={{ background: `#` + `${color}` }}
-        onClick={() => handleClick()}
-      >
-        {" "}
-        color{" "}
+      <Button style={{ background: `#` + `${color}` }} onClick={() => handleClick()}>
+        color
       </Button>
-      <DragDropContext>
-        <Droppable droppableId="characters">
-          {provided => (
-          <div
-            className="characters"
-            {...provided.droppableProps}
-            ref={provided.innerRef}
-          >
-            {colorList.map((i) => (
-              <Draggable>
-                {(provided
-                   =>
-                <p key={i.id}> {i.col} </p>
-                )}
-              </Draggable>
-            ))}
-            <List
-              color={color}
-              colorSet={colorSet}
-              text={text}
-              textSet={textSet}
-              addToList={addTextToList}
-              colorList={colorList}
-              colorListSet={colorListSet}
-            />
-          </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+      {colorList.map(i => (
+        <p key={i.id} > {i.col} </p>
+      ) )}
+      <List
+        color={color}
+        colorSet={colorSet}
+        text={text}
+        textSet={textSet}
+        addToList={addTextToList}
+        colorList={colorList}
+        colorListSet={colorListSet}
+      />
     </div>
   );
 }
