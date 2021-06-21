@@ -1,24 +1,29 @@
+import assert from "assert";
+import { setup } from "axios-cache-adapter";
 
-import { setup } from 'axios-cache-adapter'
-
-// Create `axios` instance with pre-configured `axios-cache-adapter` attached to it
 export const api = setup({
-  // `axios` options
-  baseURL: 'http://some-rest.api',
-
-  // `axios-cache-adapter` options
+  baseURL: `https://www.colr.org/json/color/random&timestamp=${new Date().getTime()}`,
+  //
   cache: {
-    maxAge: 15 * 60
-  }
-})
+    exclude: {
+      // Only exclude PUT, PATCH and DELETE methods from cache
+      methods: ["get", "put", "patch", "delete"],
+    },
+  },
+});
 
-// Send a GET request to some REST api
-api.get('/url').then(async (response) => {
+//
+api.get("/url").then(async (response) => {
+  // Response will not come from cache
+  assert.ok(response.request.fromCache !== true);
+
+  // Check that query was excluded from cache
+  assert.ok(response.request.excludedFromCache === true);
   // Do something awesome with response.data \o/
-  console.log('Request response:', response)
+  console.log("Request response:", response);
 
   // Interacting with the store, see `localForage` API.
-  const length = await api.cache.length()
+  const length = await api.cache.length();
 
-  console.log('Cache store length:', length)
-})
+  console.log("Cache store length:", length);
+});

@@ -12,7 +12,7 @@ import {api} from "./api";
 //main
 function App() {
   const [color, colorSet] = useState("");
-  const url = "https://www.colr.org/json/color/random?query=a";
+  const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
 
 
   const getEm = () => {
