@@ -1,7 +1,7 @@
 import _ from "lodash";
 import { ListItem } from "./ListItem";
 
-export const List = ({ text, textSet, addToList, colorList, colorListSet }) => {
+export const List = ({ text, textSet, addTextToList, colorList, colorListSet }) => {
   //verify input
   const isHex = () => {
     let re = /[0-9A-Fa-f]{6}/g;
@@ -25,7 +25,7 @@ export const List = ({ text, textSet, addToList, colorList, colorListSet }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addToList(text);
+    addTextToList(text);
     textSet("");
   };
 
