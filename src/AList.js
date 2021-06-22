@@ -1,5 +1,5 @@
 import _ from "lodash";
-import { ListItem } from "./ListItem";
+// import { ListItem } from "./bckp/ListItem";
 
 //
 {
@@ -22,10 +22,10 @@ colorListSet={colorListSet}
 //   colorListSet(copy);
 // };
 
-export const List = ({
+export const AList = ({
   text,
   textSet,
-  addTextToList,
+  // addTextToList,
   colorList,
   colorListSet,
 }) => {
@@ -52,34 +52,35 @@ export const List = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addTextToList(text);
-    textSet("");
+    // addTextToList(text);
+    textSet(text);
   };
 
   const handleChange = (e) => {
     textSet(e.currentTarget.value);
   };
 
-  const handleToggle = (id) => {
-    let mapped = colorList.map((text) => {
-      return text.id === Number(id)
-        ? { ...text, complete: !text.complete }
-        : { ...text };
-    });
-    colorListSet(mapped);
-  };
+  // const handleToggle = (id) => {
+  //   let mapped = colorList.map((text) => {
+  //     return text.id === Number(id)
+  //       ? { ...text, complete: !text.complete }
+  //       : { ...text };
+  //   });
+  //   colorListSet(mapped);
+  // };
 
   return (
     <div>
       <p>{text}</p>
-
+{/* 
       {colorList.map((item) => {
-        return <ListItem item={item} handleToggle={handleToggle} />;
-      })}
-
+        return <p>
+         item={item} handleToggle={handleToggle}      
+         <p/>
+        })} */}
       <form onSubmit={handleSubmit}>
         <input
-          value={text}
+          value={color}
           type="text"
           onChange={handleChange}
           placeholder="Daj hex..."

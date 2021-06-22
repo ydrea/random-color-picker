@@ -5,10 +5,12 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 //hooks
 import { useState } from "react";
 import axios from "axios";
+// import {AList} from "./AList";
 
 //main
 function App() {
   const [colorList, colorListSet] = useState([]);
+  // const [text, textSet] = useState('');
   const [color, colorSet] = useState([]);
   const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
 
@@ -44,40 +46,45 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">axios api</header>
+      <div>
+        click for a hex...
+        <Button
+          style={{
+            background: "lightgrey",
+            color: `#${color}`,
+            fontStyle: "bold",
+          }} onClick={() => handleClick()}>{color}</Button>
 
-        <div>
-          <Button style={{ background: 'grey', color: `#${color}` }} onClick={() => handleClick()}>
-            {color}
-          </Button>
-          <DragDropContext>
-            <Droppable droppableId="characters">
-              {(provided) => (
-                <div
-                  className="characters"
-                  {...provided.droppableProps}
-                  ref={provided.innerRef}
-                >
-                  {colorList.map((i, index) => (
-                    <Draggable key={i.id} draggableId={`${i.id}`} index={index}>
-                      {(provided) => (
-                        <p  style={{ color: `#${i.color}` }}
-                          ref={provided.innerRef}
-                          {...provided.draggableProps}
-                          {...provided.dragHandleProps}
-                        >
-                          {" "}
-                          {i.color}{" "}
-                        </p>
-                      )}
-                    </Draggable>
-                  ))}
+        <DragDropContext>
+          <Droppable droppableId="characters">
+            {(provided) => (
+              <ul
+                className="characters"
+                {...provided.droppableProps}
+                ref={provided.innerRef}
+              >
+                {colorList.map((i, index) => (
+                  <Draggable key={i.id} draggableId={`${i.id}`} index={index}>
+                    {(provided) => (
+                      <li
+                        style={{ color: `#${i.color}` }}
+                        ref={provided.innerRef}
+                        {...provided.draggableProps}
+                        {...provided.dragHandleProps}
+                      >
+                        {" "}
+                        {i.color}{" "}
+                      </li>
+                    )}
+                  </Draggable>
+                ))}
 
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </DragDropContext>
-        </div>
+                {provided.placeholder}
+              </ul>
+            )}
+          </Droppable>
+        </DragDropContext>
+      </div>
     </div>
   );
 }
