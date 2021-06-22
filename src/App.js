@@ -3,16 +3,12 @@ import "./App.css";
 import { Button } from "@material-ui/core";
 import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 //hooks
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { grey } from "@material-ui/core/colors";
-//components
 
 //main
 function App() {
   const [colorList, colorListSet] = useState([]);
-  // const [text, textSet] = useState("");
-  // const [colorText, colorTextSet] = useState("");
   const [color, colorSet] = useState([]);
   const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
 
@@ -35,7 +31,6 @@ function App() {
     let copy = [...colorList];
     copy = [...copy, { id: colorList.length + 1, color, complete: false }];
     colorListSet(copy);
-    console.log(colorList);
   };
   console.log(colorList);
 
