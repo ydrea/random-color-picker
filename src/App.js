@@ -5,12 +5,12 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 //hooks
 import { useState } from "react";
 import axios from "axios";
-// import {AList} from "./AList";
-
+//components
+import {TextInput} from './TextInput';
 //main
 function App() {
   const [colorList, colorListSet] = useState([]);
-  // const [text, textSet] = useState('');
+  const [text, textSet] = useState('');
   const [color, colorSet] = useState([]);
   const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
 
@@ -45,7 +45,17 @@ function App() {
   //display
   return (
     <div className="App">
-      <header className="App-header">axios api</header>
+      <header className="App-header">
+      <TextInput
+color={color}
+colorSet={colorSet}
+text={text}
+textSet={textSet}
+addToList={addColorToList}
+colorList={colorList}
+colorListSet={colorListSet}
+/> 
+      </header>
       <div>
         click for a hex...
         <Button

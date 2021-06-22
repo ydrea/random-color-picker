@@ -1,31 +1,11 @@
-import _ from "lodash";
-// import { ListItem } from "./bckp/ListItem";
+import _ from 'lodash';
 
-//
-{
-  /* <List
-color={color}
-colorSet={colorSet}
-text={text}
-textSet={textSet}
-addToList={addTextToList}
-colorList={colorList}
-colorListSet={colorListSet}
-/> */
-}
-//
-
-//add text to list
-// const addTextToList = (text) => {
-//   let copy = [...colorList];
-//   copy = [...copy, { id: colorList.length + 1, text, complete: false }];
-//   colorListSet(copy);
-// };
-
-export const AList = ({
+export const TextInput = ({
+  color,
+  colorSet,
   text,
   textSet,
-  // addTextToList,
+  addToList,
   colorList,
   colorListSet,
 }) => {
@@ -52,8 +32,9 @@ export const AList = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // addTextToList(text);
-    textSet(text);
+    colorSet(text);
+    addToList(color);
+    textSet("");
   };
 
   const handleChange = (e) => {
@@ -71,21 +52,15 @@ export const AList = ({
 
   return (
     <div>
-      <p>{text}</p>
-{/* 
-      {colorList.map((item) => {
-        return <p>
-         item={item} handleToggle={handleToggle}      
-         <p/>
-        })} */}
+
       <form onSubmit={handleSubmit}>
         <input
-          value={color}
+          value={text}
           type="text"
           onChange={handleChange}
-          placeholder="Daj hex..."
+          placeholder="Enter task..."
         />
-        <button disabled={!ifSubmit}>Submit</button>
+        <button type='submit' disabled={!ifSubmit}>Submit</button>
       </form>
     </div>
   );

@@ -1,11 +1,26 @@
 import _ from "lodash";
-import { ListItem } from "./ListItem";
+// import { ListItem } from "./bckp/ListItem";
 
-export const List = ({
-  color,
+//
+{
+  /* 
+  
+
+*/
+}
+//
+
+//add text to list
+// const addTextToList = (text) => {
+//   let copy = [...colorList];
+//   copy = [...copy, { id: colorList.length + 1, text, complete: false }];
+//   colorListSet(copy);
+// };
+
+export const AList = ({
   text,
   textSet,
-  addToList,
+  // addTextToList,
   colorList,
   colorListSet,
 }) => {
@@ -32,37 +47,38 @@ export const List = ({
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addToList(text);
-    textSet("");
+    // addTextToList(text);
+    textSet(text);
   };
 
   const handleChange = (e) => {
     textSet(e.currentTarget.value);
   };
 
-  const handleToggle = (id) => {
-    let mapped = colorList.map((text) => {
-      return text.id === Number(id)
-        ? { ...text, complete: !text.complete }
-        : { ...text };
-    });
-    colorListSet(mapped);
-  };
+  // const handleToggle = (id) => {
+  //   let mapped = colorList.map((text) => {
+  //     return text.id === Number(id)
+  //       ? { ...text, complete: !text.complete }
+  //       : { ...text };
+  //   });
+  //   colorListSet(mapped);
+  // };
 
   return (
     <div>
       <p>{text}</p>
-
+{/* 
       {colorList.map((item) => {
-        return <ListItem item={item} handleToggle={handleToggle} />;
-      })}
-
+        return <p>
+         item={item} handleToggle={handleToggle}      
+         <p/>
+        })} */}
       <form onSubmit={handleSubmit}>
         <input
-          value={text}
+          value={color}
           type="text"
           onChange={handleChange}
-          placeholder="Enter task..."
+          placeholder="Daj hex..."
         />
         <button disabled={!ifSubmit}>Submit</button>
       </form>
