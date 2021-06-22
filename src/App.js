@@ -5,6 +5,7 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 //hooks
 import { useState, useEffect } from "react";
 import axios from "axios";
+import { grey } from "@material-ui/core/colors";
 //components
 
 //main
@@ -48,38 +49,40 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">axios api</header>
-      {}
-      <Button style={{ color: `#${color}` }} onClick={() => handleClick()}>
-        {color}
-      </Button>
-      <DragDropContext>
-        <Droppable droppableId="characters">
-          {(provided) => (
-            <div
-              className="characters"
-              {...provided.droppableProps}
-              ref={provided.innerRef}
-            >
-              {colorList.map((i, index) => (
-                <Draggable key={i.id} draggableId={`${i.id}`} index={index}>
-                  {(provided) => (
-                    <p
-                      ref={provided.innerRef}
-                      {...provided.draggableProps}
-                      {...provided.dragHandleProps}
-                    >
-                      {" "}
-                      {i.color}{" "}
-                    </p>
-                  )}
-                </Draggable>
-              ))}
 
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
-      </DragDropContext>
+        <div>
+          <Button style={{ background: 'grey', color: `#${color}` }} onClick={() => handleClick()}>
+            {color}
+          </Button>
+          <DragDropContext>
+            <Droppable droppableId="characters">
+              {(provided) => (
+                <div
+                  className="characters"
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                >
+                  {colorList.map((i, index) => (
+                    <Draggable key={i.id} draggableId={`${i.id}`} index={index}>
+                      {(provided) => (
+                        <p  style={{ color: `#${i.color}` }}
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                          {...provided.dragHandleProps}
+                        >
+                          {" "}
+                          {i.color}{" "}
+                        </p>
+                      )}
+                    </Draggable>
+                  ))}
+
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </DragDropContext>
+        </div>
     </div>
   );
 }
