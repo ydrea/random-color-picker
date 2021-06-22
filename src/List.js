@@ -1,6 +1,27 @@
 import _ from "lodash";
 import { ListItem } from "./ListItem";
 
+//
+{
+  /* <List
+color={color}
+colorSet={colorSet}
+text={text}
+textSet={textSet}
+addToList={addTextToList}
+colorList={colorList}
+colorListSet={colorListSet}
+/> */
+}
+//
+
+//add text to list
+// const addTextToList = (text) => {
+//   let copy = [...colorList];
+//   copy = [...copy, { id: colorList.length + 1, text, complete: false }];
+//   colorListSet(copy);
+// };
+
 export const List = ({
   text,
   textSet,
