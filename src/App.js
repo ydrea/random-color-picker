@@ -48,6 +48,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">axios api</header>
+      {}
       <Button style={{ color: `#${color}` }} onClick={() => handleClick()}>
         {color}
       </Button>
@@ -60,7 +61,7 @@ function App() {
               ref={provided.innerRef}
             >
               {colorList.map((i, index) => (
-                <Draggable key={i.id} draggableId={`a`} index={index}>
+                <Draggable key={i.id} draggableId={`${i.id}`} index={index}>
                   {(provided) => (
                     <p
                       ref={provided.innerRef}
