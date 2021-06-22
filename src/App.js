@@ -51,7 +51,7 @@ function App() {
     <div className="App">
       <header className="App-header">axios api</header>
       <Button
-        style={{ background: `#aba` }}
+        style={{ background: `#${color}` }}
         onClick={() => handleClick()}
       >
         {color}
