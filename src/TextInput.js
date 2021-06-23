@@ -1,4 +1,6 @@
-import _ from 'lodash';
+import _ from "lodash";
+
+import { useForm } from "react-hook-form";
 
 export const TextInput = ({
   color,
@@ -7,7 +9,6 @@ export const TextInput = ({
   textSet,
   addToList,
   colorList,
-  colorListSet,
 }) => {
   //verify input
   const isHex = () => {
@@ -41,18 +42,8 @@ export const TextInput = ({
     textSet(e.currentTarget.value);
   };
 
-  // const handleToggle = (id) => {
-  //   let mapped = colorList.map((text) => {
-  //     return text.id === Number(id)
-  //       ? { ...text, complete: !text.complete }
-  //       : { ...text };
-  //   });
-  //   colorListSet(mapped);
-  // };
-
   return (
     <div>
-
       <form onSubmit={handleSubmit}>
         <input
           value={text}
@@ -60,7 +51,9 @@ export const TextInput = ({
           onChange={handleChange}
           placeholder="Enter task..."
         />
-        <button type='submit' disabled={!ifSubmit}>Submit</button>
+        <button type="submit" disabled={!ifSubmit}>
+          Submit
+        </button>
       </form>
     </div>
   );
