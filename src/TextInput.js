@@ -10,49 +10,41 @@ export const TextInput = ({
   colorList,
 }) => {
   //set Errors
-  const [errHex, errHexSet] = useState(null);
-  const [errIncluded, errIncludedSet] = useState(null);
+  const [errHex, errHexSet] = useState({});
+  const [errIncluded, errIncludedSet] = useState({});
 
-  const [disable, disableSet] = useState(true)
+  const [disable, disableSet] = useState(false);
+  const firstRender = useRef(true);
 
-  //verify input
-  const isHex = () => {
+  //validate
+  const valiDate = () => {
+    //hex
     let re = /[0-9A-Fa-f]{6}/g;
     let inputString = "AABBCC";
     if (!re.test(inputString)) {
       errHexSet("hex!");
-      return false;
-    } else {
-      return true;
+      //is listed
+      if (_.includes([colorList], text)) {
+        errIncludedSet("already listed");
+
+        if (errHex || errIncluded) {
+          alert("zilch");
+          return false;
+        } else {
+          return true;
+        }
+      }
     }
   };
-
-  const isIncluded = () => {
-    if (_.includes([colorList], text)) {
-      errIncludedSet("already listed");
-      return false;
-    } else {
-      return true;
+  useEffect(() => {
+    if (firstRender.current) {
+      firstRender.current = false;
+      return;
     }
-  };
+    disableSet(valiDate);
 
-  //validate
-  const valiDate = () => {
-  if (errHex || errIncluded)
-  alert('zilch');
-  return false;
-  } else {
-    return true
-    }
-  }
-
-useEffect(() => {
-  if (firstRender.current) {
-    firstRender.current = false
-  return 
-  } setDisabled(valiDate)
-}, [input])
-
+  console.log (disable);
+  }, [text]);
 
   //do it
   const handleSubmit = (e) => {
