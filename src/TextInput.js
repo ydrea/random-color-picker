@@ -1,7 +1,5 @@
 import _ from "lodash";
 
-import { useForm } from "react-hook-form";
-
 export const TextInput = ({
   color,
   colorSet,
@@ -10,21 +8,29 @@ export const TextInput = ({
   addToList,
   colorList,
 }) => {
+//set Errors
+const [errHex, errHexSet] = useState(null)
+const [errIncluded, errIncludedSet] = useState(null)
+
   //verify input
   const isHex = () => {
     let re = /[0-9A-Fa-f]{6}/g;
     let inputString = "AABBCC";
-
     if (!re.test(inputString)) {
-      alert("invalid hex");
+      errHexSet('hex!')
+      return false
     } else {
-      return true;
+      return true
     }
-    re.lastIndex = 0;
   };
 
   const isIncluded = () => {
-    if (!_.includes([colorList], text)) return true;
+    if (_.includes([colorList], text)) {
+      errIncludedSet('already listed')
+      return false
+    } else {
+      return true;
+    }
   };
 
   const ifSubmit = () => {
