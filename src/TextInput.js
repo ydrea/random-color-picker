@@ -18,13 +18,17 @@ export const TextInput = ({
     watch,
     formState: { errors },
   } = useForm();
+
   const onSubmit = (data) => {
     // e.preventDefault();
-    colorSet(data);
-    addToList(color);
-    textSet("");
+    console.log(data);
+    // textSet("");
   };
 
+  const goSubmit = (data) => {
+    colorSet(data);
+    addToList(color);
+  };
   console.log(watch("text"));
 
   return (
@@ -50,13 +54,13 @@ export const TextInput = ({
             },
           })}
         />
-        <button type="submit">Submit</button>
-
-        {errors.text && errors.text.type === "isHex" && <span>Hex!</span>}
-
+        <button type="submit" onClick={goSubmit}>
+          Submit
+        </button>
         {errors.text && errors.text.type === "isIn" && (
           <span>Already listed...</span>
         )}
+        {errors.text && errors.text.type === "isHex" && <span>Hex!</span>}
       </form>
     </div>
   );

@@ -6,11 +6,11 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useState } from "react";
 import axios from "axios";
 //components
-import {TextInput} from './TextInput';
+import { TextInput } from "./TextInput";
 //main
 function App() {
   const [colorList, colorListSet] = useState([]);
-  const [text, textSet] = useState('');
+  const [text, textSet] = useState("");
   const [color, colorSet] = useState([]);
   const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
 
@@ -46,15 +46,15 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-      <TextInput
-color={color}
-colorSet={colorSet}
-text={text}
-textSet={textSet}
-addToList={addColorToList}
-colorList={colorList}
-colorListSet={colorListSet}
-/> 
+        <TextInput
+          color={color}
+          colorSet={colorSet}
+          text={text}
+          textSet={textSet}
+          addToList={addColorToList}
+          colorList={colorList}
+          colorListSet={colorListSet}
+        />
       </header>
       <div>
         click for a hex...
@@ -63,13 +63,16 @@ colorListSet={colorListSet}
             background: "lightgrey",
             color: `#${color}`,
             fontStyle: "bold",
-          }} onClick={() => handleClick()}>{color}</Button>
-
+          }}
+          onClick={() => handleClick()}
+        >
+          {color}
+        </Button>
         <DragDropContext>
-          <Droppable droppableId="characters">
+          <Droppable droppableId="App">
             {(provided) => (
               <ul
-                className="characters"
+                className="App"
                 {...provided.droppableProps}
                 ref={provided.innerRef}
               >
@@ -77,7 +80,7 @@ colorListSet={colorListSet}
                   <Draggable key={i.id} draggableId={`${i.id}`} index={index}>
                     {(provided) => (
                       <li
-                        style={{ color: `#${i.color}` }}
+                        style={{ backgroundColor: `#${i.color}` }}
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
