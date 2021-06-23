@@ -1,6 +1,5 @@
 import _ from "lodash";
 import React, { useState } from "react";
-import { useForm } from "react-hook-form";
 export const TextInput = ({
   color,
   colorSet,
@@ -9,58 +8,31 @@ export const TextInput = ({
   addToList,
   colorList,
 }) => {
-  //use Form
-
-  const {
-    register,
-    getValues,
-    handleSubmit,
-    watch,
-    formState: { errors },
-  } = useForm();
-
-  const onSubmit = (data) => {
-    // e.preventDefault();
-    console.log(data);
-    // textSet("");
-  };
-
-  const goSubmit = (data) => {
-    colorSet(data);
+  
+  //do it
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    colorSet(text);
     addToList(color);
+    textSet("");
   };
-  console.log(watch("text"));
+
+  const handleChange = (e) => {
+    textSet(e.currentTarget.value);
+  };
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit}>
         <input
-          // value={text}
+          value={text}
           type="text"
           name="text"
+          onChange={handleChange}
           placeholder="enter a hex..."
-          ref={register({
-            validate: {
-              isIn: (value) => {
-                return _.includes([colorList], value);
-              },
-              isHex: (value) => {
-                return (
-                  typeof value === "string" &&
-                  value.length === 6 &&
-                  !isNaN(Number("0x" + value))
-                );
-              },
-            },
-          })}
         />
-        <button type="submit" onClick={goSubmit}>
-          Submit
-        </button>
-        {errors.text && errors.text.type === "isIn" && (
-          <span>Already listed...</span>
-        )}
-        {errors.text && errors.text.type === "isHex" && <span>Hex!</span>}
+        <button type="submit">Submit</button>
+
       </form>
     </div>
   );
