@@ -1,5 +1,6 @@
 import _ from "lodash";
 import React, { useState } from "react";
+
 export const TextInput = ({
   color,
   colorSet,

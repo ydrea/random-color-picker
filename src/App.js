@@ -69,7 +69,7 @@ function App() {
           {color}
         </Button>
         <DragDropContext>
-          <Droppable droppableId="App">
+          <Droppable droppableId="hpp">
             {(provided) => (
               <ul
                 className="App"
