@@ -6,7 +6,8 @@ import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
 import { useState } from "react";
 import axios from "axios";
 //components
-import { TextInput } from "./TextInput";
+// import { TextInput } from "./TextInput";
+import Basic from './Formik'
 //main
 function App() {
   const [colorList, colorListSet] = useState([]);
@@ -46,14 +47,12 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <TextInput
+        <Basic
           color={color}
           colorSet={colorSet}
-          text={text}
           textSet={textSet}
           addToList={addColorToList}
           colorList={colorList}
-          colorListSet={colorListSet}
         />
       </header>
       <div>

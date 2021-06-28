@@ -1,36 +1,35 @@
-import _ from "lodash";
+import _, { values } from "lodash";
 import React, { useState } from "react";
-import { useFormik } from "formik";
-
+import { useField, Form, FormikProps, Formik } from "formik";
 
 export const TextInput = ({
   color,
   colorSet,
-  // text,
   textSet,
   addToList,
   colorList,
 }) => {
-//validate
-const validate = (values) => {
-  const errors = {};
+  //validate
+  const validate = (values) => {
+    
+    const errors = {};
 
-  if (_.includes([colorList], values.text)) {
-    errors.values.text = "Previously included";
-  } else if (
-    !(
-      typeof values.text === "string" &&
-      values.text.length === 6 &&
-      !isNaN(Number("0x" + values.text))
-    )
-  ) {
-    errors.text = "Invalid hex color";
-  }
-  return errors;
-};
+    if (_.includes([colorList], values.text)) {
+      errors.text = "Previously included";
+    } else if (
+      !(
+        typeof values.text === "string" &&
+        values.text.length === 6 &&
+        !isNaN(Number("0x" + values.text))
+      )
+    ) {
+      errors.text = "Invalid hex color";
+    }
+    return errors;
+  };
 
   //formik
-  const formik = useFormik({
+  const formik = useField({
     initialValues: {
       text: "",
     },
@@ -42,18 +41,6 @@ const validate = (values) => {
       textSet("");
     },
   });
-
-  //do it
-  // const formik.handleSubmit = (e) => {
-  //   e.preventDefault();
-  //   colorSet(text);
-  //   addToList(color);
-  //   textSet("");
-  // };
-
-  // const formik.handleChange = (e) => {
-  //   textSet(e.currentTarget.value);
-  // };
 
   return (
     <div>
