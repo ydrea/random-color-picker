@@ -2,24 +2,13 @@ import React from "react";
 import { Formik } from "formik";
 import _ from "lodash";
 
-const Basic = ({
-    color,
-    colorSet,
-    textSet,
-    addToList,
-    colorList,
-  }) => (
+const Basic = ({ color, colorSet, txtSet, addToList, colorList }) => (
   <div>
-    <h1>Anywhere in your app!</h1>
     <Formik
       initialValues={{ txt: "" }}
       validate={(values) => {
-
         const errors = {};
-
-        if (_.includes([colorList], values.txt)) {
-          errors.txt = "Previously included";
-        }  else if (
+        if (
           !(
             typeof values.txt === "string" &&
             values.txt.length === 6 &&
@@ -28,16 +17,17 @@ const Basic = ({
         ) {
           errors.txt = "Invalid hex color";
         }
+        else if
+        (_.includes([colorList], values.txt)) {
+          errors.txt = "Previously included";
+        } 
+        
         return errors;
-     
-
-
       }}
       onSubmit={(values) => {
-        
-      colorSet(values.text);
-      addToList(color);
-      textSet("");
+        colorSet(values.txt);
+        addToList(color);
+        txtSet("");
       }}
     >
       {({
@@ -47,7 +37,6 @@ const Basic = ({
         handleChange,
         handleBlur,
         handleSubmit,
-        isSubmitting,
         /* and other goodies */
       }) => (
         <form onSubmit={handleSubmit}>
@@ -60,9 +49,7 @@ const Basic = ({
           />
           {errors.txt && touched.txt && errors.txt}
 
-          <button type="submit" disabled={isSubmitting}>
-            Submit
-          </button>
+          <button type="submit">Submit</button>
         </form>
       )}
     </Formik>

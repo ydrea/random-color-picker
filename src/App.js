@@ -7,11 +7,11 @@ import { useState } from "react";
 import axios from "axios";
 //components
 // import { TextInput } from "./TextInput";
-import Basic from './Formik'
+import Basic from "./Formik";
 //main
 function App() {
   const [colorList, colorListSet] = useState([]);
-  const [text, textSet] = useState("");
+  const [txt, txtSet] = useState("");
   const [color, colorSet] = useState([]);
   const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
 
@@ -50,7 +50,8 @@ function App() {
         <Basic
           color={color}
           colorSet={colorSet}
-          textSet={textSet}
+          txt={txt}
+          txtSet={txtSet}
           addToList={addColorToList}
           colorList={colorList}
         />
