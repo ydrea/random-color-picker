@@ -1,7 +1,7 @@
 //swag
 import "./App.css";
 import { Button } from "@material-ui/core";
-import { DragDropContext, Droppable, Draggable } from "react-beautiful-dnd";
+
 //hooks
 import { useState } from "react";
 import axios from "axios";
@@ -12,7 +12,8 @@ function App() {
   const [colorList, colorListSet] = useState([]);
   const [text, textSet] = useState("");
   const [color, colorSet] = useState([]);
-  const url = `https://www.colr.org/json/color/random?query&timestamp=${new Date().getTime()}`;
+  const url = 
+  `https://api.openweathermap.org/data/2.5/forecast?q=${text}&appid=53af3d2fdf27c517f767ade373c0734c`;
 
   //api call
   const getEm = () => {
@@ -20,7 +21,7 @@ function App() {
       .get(url)
       .then((rez) => {
         console.log(rez);
-        colorSet(rez.data.new_color);
+        colorSet(rez.data.city.name);
       })
       .catch((err) => {
         console.log(err);
@@ -68,35 +69,11 @@ function App() {
         >
           {color}
         </Button>
-        <DragDropContext>
-          <Droppable droppableId="hpp">
-            {(provided) => (
-              <ul
-                className="App"
-                {...provided.droppableProps}
-                ref={provided.innerRef}
-              >
-                {colorList.map((i, index) => (
-                  <Draggable key={i.id} draggableId={`${i.id}`} index={index}>
-                    {(provided) => (
-                      <li
-                        style={{ backgroundColor: `#${i.color}` }}
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        {" "}
-                        {i.color}{" "}
-                      </li>
-                    )}
-                  </Draggable>
-                ))}
-
-                {provided.placeholder}
-              </ul>
-            )}
-          </Droppable>
-        </DragDropContext>
+        <ul>
+          {colorList.map((i, index) => (
+            <li> {i.color} </li>
+          ))}
+        </ul>
       </div>
     </div>
   );
