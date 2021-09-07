@@ -37,12 +37,6 @@ function App() {
   };
   console.log(colorList);
 
-  //call em up on button
-  const handleClick = () => {
-    getEm();
-    addColorToList(color);
-  };
-
   //display
   return (
     <div className="App">
@@ -55,11 +49,12 @@ function App() {
           addToList={addColorToList}
           colorList={colorList}
           colorListSet={colorListSet}
+          getEm={getEm}
         />
       </header>
       <div>
         click for a hex...
-        <Button
+        {/* <Button
           style={{
             background: "lightgrey",
             color: `#${color}`,
@@ -68,7 +63,7 @@ function App() {
           onClick={() => handleClick()}
         >
           {color}
-        </Button>
+        </Button> */}
         <ul>
           {colorList.map((i, index) => (
             <li> {i.color} </li>

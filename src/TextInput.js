@@ -8,14 +8,20 @@ export const TextInput = ({
   textSet,
   addToList,
   colorList,
+  addColorToList,
+  getEm,
 }) => {
-  
   //do it
   const handleSubmit = (e) => {
-    e.preventDefault();
-    colorSet(text);
+    // e.preventDefault();
+    // colorSet(text);
     addToList(color);
-    textSet("");
+    // textSet("");
+    // };
+    //call em up on button
+    // const handleClick = () => {
+    getEm();
+    // addColorToList(color);
   };
 
   const handleChange = (e) => {
@@ -30,10 +36,9 @@ export const TextInput = ({
           type="text"
           name="text"
           onChange={handleChange}
-          placeholder="enter a hex..."
+          placeholder="enter a city"
         />
         <button type="submit">Submit</button>
-
       </form>
     </div>
   );
